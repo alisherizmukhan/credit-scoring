@@ -133,6 +133,7 @@ Run the service:
 
 ```bash
 docker compose up --build -d     # api on :8000, MLflow server on :5000
+# ports are configurable: MLFLOW_PORT=5001 API_PORT=8080 docker compose up --build -d
 # or without Docker: make api
 ```
 
