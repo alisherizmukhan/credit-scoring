@@ -1,0 +1,30 @@
+# data and model artifacts are reproducible: `make data && make train`
+data/
+models/
+mlruns/
+mlartifacts/
+mlflow.db
+mlflow_data/
+catboost_info/
+
+# python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+build/
+dist/
+.pytest_cache/
+.ruff_cache/
+.coverage
+coverage.xml
+htmlcov/
+.ipynb_checkpoints/
+
+# secrets / local
+.env
+kaggle.json
+.idea/
+.vscode/
+.DS_Store

@@ -1,0 +1,77 @@
+# Central configuration. Every script reads this file; nothing is hard-coded in code.
+
+# auto -> Home Credit if Kaggle credentials exist, otherwise Give Me Some Credit
+# (Kaggle, then the OpenML mirror). Explicit values: home_credit | gmsc
+dataset: auto
+seed: 42
+
+paths:
+  raw: data/raw
+  processed: data/processed
+  models: models
+  reports: reports
+
+split:
+  test_size: 0.2          # stratified hold-out, never touched during tuning/model selection
+
+cv:
+  n_splits: 5             # Stratified K-Fold on the training part
+
+models:                   # trained in this order: baseline first
+  - logreg
+  - lightgbm
+  - catboost
+
+tuning:
+  enabled: true
+  cv_splits: 3            # cheaper CV inside Optuna
+  sample_size: 100000     # tune on a stratified subsample to save time (null = all rows)
+  timeout_sec: 1200       # per model
+  n_trials:
+    lightgbm: 30
+    catboost: 20
+
+# Cost matrix for the cut-off. Missing a default (FN) costs the lost principal,
+# rejecting a good client (FP) costs the lost interest income.
+business:
+  loan_amount: 500000     # average loan, KZT
+  lgd: 0.6                # loss given default
+  profit_margin: 0.12     # net interest income on a good loan
+  # cost_fn = loan * lgd = 300k KZT; cost_fp = loan * margin = 60k KZT -> FN is 5x costlier
+
+# Probability -> score (300..850). Points-to-double-odds scaling as in classic scorecards.
+scorecard:
+  base_score: 650         # score at base odds
+  base_odds: 50           # good:bad = 50:1
+  pdo: 40                 # +40 points doubles the odds
+  min_score: 300
+  max_score: 850
+
+mlflow:
+  tracking_uri: sqlite:///mlflow.db   # overridden by MLFLOW_TRACKING_URI env var
+  artifact_location: null             # null = MLflow default (./mlruns for a local DB)
+  experiment: credit-scoring
+  registered_model: credit-scoring-pd
+
+explain:
+  sample_size: 2000       # rows used for the SHAP summary plot
+
+drift:
+  bins: 10
+  features:
+    gmsc:
+      - revolving_utilization
+      - age
+      - debt_ratio
+      - monthly_income
+      - open_credit_lines
+      - past_due_30_59
+      - dependents
+    home_credit:
+      - AMT_INCOME_TOTAL
+      - AMT_CREDIT
+      - AMT_ANNUITY
+      - DAYS_BIRTH
+      - EXT_SOURCE_2
+      - EXT_SOURCE_3
+      - BUREAU_LOAN_COUNT
