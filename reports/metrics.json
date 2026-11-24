@@ -1,0 +1,174 @@
+{
+  "dataset": "gmsc",
+  "best_model": "lightgbm",
+  "threshold": 0.165,
+  "models": {
+    "logreg": {
+      "cv_roc_auc_mean": 0.8534654317969268,
+      "cv_roc_auc_std": 0.0030769988049833222,
+      "cv": {
+        "roc_auc": 0.8534187631461643,
+        "gini": 0.7068375262923285,
+        "pr_auc": 0.3804643425949408,
+        "ks": 0.5490703387502108,
+        "brier": 0.05048845046500856,
+        "log_loss": 0.18437726891106826
+      },
+      "test": {
+        "roc_auc": 0.8586431135948306,
+        "gini": 0.7172862271896612,
+        "pr_auc": 0.3957557423249297,
+        "ks": 0.5571802766703531,
+        "brier": 0.04982314281558062,
+        "log_loss": 0.18186865732185198
+      },
+      "params": {
+        "C": 1.0
+      },
+      "tuning": null,
+      "train_seconds": 2.029678300023079
+    },
+    "lightgbm": {
+      "cv_roc_auc_mean": 0.865208321076406,
+      "cv_roc_auc_std": 0.0036452397652774,
+      "cv": {
+        "roc_auc": 0.8651125938723622,
+        "gini": 0.7302251877447243,
+        "pr_auc": 0.400310373047859,
+        "ks": 0.5736810530952949,
+        "brier": 0.04902845087535328,
+        "log_loss": 0.17766232161842324
+      },
+      "test": {
+        "roc_auc": 0.8717827328446164,
+        "gini": 0.7435654656892328,
+        "pr_auc": 0.4153388203927327,
+        "ks": 0.5936163342313978,
+        "brier": 0.04826299603731835,
+        "log_loss": 0.17440751074804473
+      },
+      "params": {
+        "n_estimators": 300,
+        "learning_rate": 0.029090467433351325,
+        "num_leaves": 14,
+        "min_child_samples": 237,
+        "subsample": 0.6722060691071475,
+        "subsample_freq": 1,
+        "colsample_bytree": 0.6370035479810712,
+        "reg_lambda": 0.9205185651506451,
+        "reg_alpha": 0.014143589307665166
+      },
+      "tuning": {
+        "best_cv_auc": 0.8630046261841083,
+        "n_trials": 30
+      },
+      "train_seconds": 59.34800950001227
+    },
+    "catboost": {
+      "cv_roc_auc_mean": 0.8650788133158379,
+      "cv_roc_auc_std": 0.003333989581511967,
+      "cv": {
+        "roc_auc": 0.8649895805986357,
+        "gini": 0.7299791611972715,
+        "pr_auc": 0.39990355446717035,
+        "ks": 0.5745739407372074,
+        "brier": 0.04906299997632863,
+        "log_loss": 0.17776845142317643
+      },
+      "test": {
+        "roc_auc": 0.8721533102410964,
+        "gini": 0.7443066204821929,
+        "pr_auc": 0.408673324372997,
+        "ks": 0.594795472472596,
+        "brier": 0.04846309205999057,
+        "log_loss": 0.17473874619319127
+      },
+      "params": {
+        "iterations": 1000,
+        "learning_rate": 0.023434060722466968,
+        "depth": 7,
+        "l2_leaf_reg": 11.684487672061199,
+        "random_strength": 1.7181119203384034,
+        "bagging_temperature": 0.806432712641447
+      },
+      "tuning": {
+        "best_cv_auc": 0.8633915213512381,
+        "n_trials": 20
+      },
+      "train_seconds": 350.14299660001416
+    }
+  },
+  "business": {
+    "chosen_cutoff": {
+      "threshold": 0.165,
+      "approval_rate": 0.8936666666666667,
+      "bad_rate_approved": 0.03144349123461395,
+      "defaults_caught_share": 0.5795511221945138,
+      "credit_loss_per_1000_apps": 8430000.0,
+      "lost_profit_per_1000_apps": 4056000.0,
+      "expected_cost_per_1000_apps": 12486000.0
+    },
+    "cutoff_0.5": {
+      "threshold": 0.5,
+      "approval_rate": 0.9765,
+      "bad_rate_approved": 0.05410479604027991,
+      "defaults_caught_share": 0.20947630922693267,
+      "credit_loss_per_1000_apps": 15850000.0,
+      "lost_profit_per_1000_apps": 570000.0,
+      "expected_cost_per_1000_apps": 16420000.0
+    },
+    "approve_all": {
+      "threshold": 1.01,
+      "approval_rate": 1.0,
+      "bad_rate_approved": 0.06683333333333333,
+      "defaults_caught_share": 0.0,
+      "credit_loss_per_1000_apps": 20050000.0,
+      "lost_profit_per_1000_apps": 0.0,
+      "expected_cost_per_1000_apps": 20050000.0
+    },
+    "theoretical_cutoff": 0.16666666666666666
+  },
+  "explain": {
+    "client_index": 336,
+    "client_pd": 0.33256963801263856,
+    "client_top_reasons": [
+      {
+        "feature": "revolving_utilization",
+        "value": 0.866541081,
+        "shap": 1.0461655642549634
+      },
+      {
+        "feature": "total_past_due",
+        "value": 1.0,
+        "shap": 0.7761010469644399
+      },
+      {
+        "feature": "times_90_days_late",
+        "value": 1.0,
+        "shap": 0.4633285341501479
+      },
+      {
+        "feature": "monthly_income",
+        "value": 2590.0,
+        "shap": 0.18396945004546067
+      },
+      {
+        "feature": "non_real_estate_lines",
+        "value": 11.0,
+        "shap": 0.12115462055393914
+      }
+    ],
+    "top_features": [
+      "revolving_utilization",
+      "total_past_due",
+      "age",
+      "monthly_income",
+      "open_credit_lines",
+      "debt_ratio",
+      "times_90_days_late",
+      "monthly_debt",
+      "non_real_estate_lines",
+      "real_estate_loans"
+    ]
+  }
+}
